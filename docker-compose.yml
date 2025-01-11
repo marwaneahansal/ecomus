@@ -8,90 +8,105 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     ports:
-      - "5432:5432"
+      - "5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
+    networks:
+      - ecomus
   
   rabbitmq:
-      image: rabbitmq:3.13.0-management-alpine
-      container_name: rabbitmq
-      ports:
-        - '5672:5672'
-        - '15672:15672'
-      environment:
-        RABBITMQ_DEFAULT_USER: guest
-        RABBITMQ_DEFAULT_PASS: guest
+    image: rabbitmq:3.13.0-management-alpine
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - ecomus
 
   gateway:
-      build: 
-        context: ./gateway
-        dockerfile: Dockerfile
-      container_name: gateway
-      ports:
-        - '3000:3000'
-      depends_on:
-        - rabbitmq
-      restart: unless-stopped
-      env_file:
-        - ./gateway/.env
-      volumes:
-        - ./gateway:/app/
-        - /app/node_modules
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - '3000:3000'
+    depends_on:
+      - rabbitmq
+    restart: unless-stopped
+    env_file:
+      - ./gateway/.env
+    volumes:
+      - ./gateway:/app/
+      - /app/node_modules
+    networks:
+      - ecomus
     
   auth:
-      build: 
-        context: ./authService
-        dockerfile: Dockerfile
-      container_name: authService
-      ports:
-        - '3001:3001'
-        - '5555:5555'
-      depends_on:
-        - db
-        - rabbitmq
-        - gateway
-      restart: unless-stopped
-      env_file:
-        - ./authService/.env
-      volumes:
-        - ./authService:/app/
-        - /app/node_modules
+    build: 
+      context: ./authService
+      dockerfile: Dockerfile
+    container_name: authService
+    ports:
+      - '3001:3001'
+      - '5555:5555'
+    depends_on:
+      - db
+      - rabbitmq
+      - gateway
+    restart: unless-stopped
+    env_file:
+      - ./authService/.env
+    volumes:
+      - ./authService:/app/
+      - /app/node_modules
+    networks:
+      - ecomus
 
   products:
-      build: 
-        context: ./productsService
-        dockerfile: Dockerfile
-      container_name: productsService
-      ports:
-        - '3002:3002'
-      depends_on:
-        - db
-        - rabbitmq
-        - gateway
-      restart: unless-stopped
-      env_file:
-        - ./productsService/.env
-      volumes:
-        - ./productsService:/app/
-        - /app/node_modules
+    build: 
+      context: ./productsService
+      dockerfile: Dockerfile
+    container_name: productsService
+    ports:
+      - '3002:3002'
+    depends_on:
+      - db
+      - rabbitmq
+      - gateway
+    restart: unless-stopped
+    env_file:
+      - ./productsService/.env
+    volumes:
+      - ./productsService:/app/
+      - /app/node_modules
+    networks:
+      - ecomus
 
   orders:
-      build: 
-        context: ./ordersService
-        dockerfile: Dockerfile
-      container_name: ordersService
-      ports:
-        - '3003:3003'
-      depends_on:
-        - db
-        - rabbitmq
-        - gateway
-      restart: unless-stopped
-      env_file:
-        - ./ordersService/.env
-      volumes:
-        - ./ordersService:/app/
-        - /app/node_modules
+    build: 
+      context: ./ordersService
+      dockerfile: Dockerfile
+    container_name: ordersService
+    ports:
+      - '3003:3003'
+    depends_on:
+      - db
+      - rabbitmq
+      - gateway
+    restart: unless-stopped
+    env_file:
+      - ./ordersService/.env
+    volumes:
+      - ./ordersService:/app/
+      - /app/node_modules
+    networks:
+      - ecomus
 
 volumes:
   dbdata:
+networks:
+  ecomus:
+    driver: bridge

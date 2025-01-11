@@ -11,10 +11,12 @@ declare global {
 }
 
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = req.headers.authorization;
+    let accessToken = req.headers.authorization;
+    // remove Bearer from token
+    accessToken = accessToken?.split(" ")[1];
     try {
         if (!accessToken) {
-            return res.status(403).json({ message: "Access denied, token missing!" });
+            return res.status(401).json({ message: "Access denied, token missing!" });
         }
         const existingUser = await findUserByToken(accessToken);
         if (!existingUser) {

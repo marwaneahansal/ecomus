@@ -14,7 +14,13 @@ router.post('/login', loginUser);
 router.post('/refresh-token', refreshToken);
 
 router.get('/me',  authenticate, (req, res) => {
-  res.json(req.currentUser);
+  res.json({
+    user: {
+      id: req.currentUser?.id,
+      email: req.currentUser?.email,
+      name: req.currentUser?.name,
+    },
+  });
 });
 
 

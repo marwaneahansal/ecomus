@@ -39,7 +39,7 @@ const loginUser = async (req: Request, res: Response) => {
       existingUser.password
     );
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(404).json({ message: "Invalid credentials" });
     }
 
     const accessToken = await generateAccessToken(existingUser);
