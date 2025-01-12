@@ -21,9 +21,7 @@ const registerUser = async (req: Request, res: Response) => {
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.log(`Error:  ${error}`);
-    res
-      .status(500)
-      .json({ message: "Internal server error during user registration" });
+    res.status(500).json({ message: "Internal server error during user registration" });
   }
 };
 
@@ -34,10 +32,7 @@ const loginUser = async (req: Request, res: Response) => {
     if (!existingUser) {
       return res.status(404).json({ message: "Invalid credentials" });
     }
-    const isPasswordValid = await comparePassword(
-      password,
-      existingUser.password
-    );
+    const isPasswordValid = await comparePassword(password, existingUser.password);
     if (!isPasswordValid) {
       return res.status(404).json({ message: "Invalid credentials" });
     }
@@ -51,12 +46,10 @@ const loginUser = async (req: Request, res: Response) => {
         sameSite: "strict",
       })
       .header("Authorization", accessToken)
-      .json({ message: "User logged in successfully" });
+      .json({ message: "User logged in successfully", accessToken: accessToken });
   } catch (error) {
     console.log(`Error:  ${error}`);
-    res
-      .status(500)
-      .json({ message: "Internal server error during user login" });
+    res.status(500).json({ message: "Internal server error during user login" });
   }
 };
 
@@ -78,12 +71,10 @@ const refreshToken = async (req: Request, res: Response) => {
     res
       .status(200)
       .header("Authorization", accessToken)
-      .json({ message: "Token refreshed successfully" });
+      .json({ message: "Token refreshed successfully", accessToken });
   } catch (error) {
     console.log(`Error:  ${error}`);
-    res
-      .status(500)
-      .json({ message: "Internal server error during token refresh" });
+    res.status(500).json({ message: "Internal server error during token refresh" });
   }
 };
 

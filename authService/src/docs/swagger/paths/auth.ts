@@ -1,6 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
-
 const ErrorResponse = {
   schema: {
     type: "object",
@@ -9,11 +8,11 @@ const ErrorResponse = {
         type: "string",
       },
     },
-  }
-}
+  },
+};
 
 const authPaths: swaggerJSDoc.Paths = {
-  '/': {
+  "/": {
     get: {
       summary: "Hello World from auth",
       tags: ["Auth"],
@@ -31,12 +30,12 @@ const authPaths: swaggerJSDoc.Paths = {
                 },
               },
             },
-          }
+          },
         },
       },
     },
   },
-  '/register': {
+  "/register": {
     post: {
       summary: "Register a new user",
       tags: ["Auth"],
@@ -73,29 +72,28 @@ const authPaths: swaggerJSDoc.Paths = {
                 properties: {
                   message: {
                     type: "string",
-                    
                   },
                 },
               },
             },
-          }
+          },
         },
         "409": {
           description: "User already exists",
           content: {
-            "application/json": ErrorResponse
-          }
+            "application/json": ErrorResponse,
+          },
         },
         "500": {
           description: "Internal server error during user registration",
           content: {
-            "application/json": ErrorResponse
-          }
+            "application/json": ErrorResponse,
+          },
         },
       },
     },
   },
-  '/login': {
+  "/login": {
     post: {
       summary: "Login a user",
       tags: ["Auth"],
@@ -129,71 +127,38 @@ const authPaths: swaggerJSDoc.Paths = {
                 properties: {
                   message: {
                     type: "string",
-                    
+                  },
+                  accessToken: {
+                    type: "string",
+                    format: "JWT",
                   },
                 },
               },
             },
-          }
+          },
         },
         "404": {
           description: "User not found or invalid credentials",
           content: {
-            "application/json": ErrorResponse
-          }
+            "application/json": ErrorResponse,
+          },
         },
         "500": {
           description: "Internal server error during user registration",
           content: {
-            "application/json": ErrorResponse
-          }
+            "application/json": ErrorResponse,
+          },
         },
       },
     },
   },
-  '/refresh-token': {
-    post: {
-      summary: "Refresh user token",
-      tags: ["Auth"],
-      responses: {
-        "200": {
-          description: "User token refreshed successfully",
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  message: {
-                    type: "string",
-                    
-                  },
-                },
-              },
-            },
-          }
-        },
-        "403": {
-          description: "Access denied, token missing or expired",
-          content: {
-            "application/json": ErrorResponse
-          }
-        },
-        "404": {
-          description: "User not found",
-          content: {
-            "application/json": ErrorResponse
-          }
-        },
-      },
-    },
-  },
-  '/me': {
+  "/me": {
     get: {
       summary: "Get current user",
       tags: ["Auth"],
       security: [
         {
-          bearerAuth: [],
+          accessToken: [],
         },
       ],
       responses: {
@@ -228,13 +193,54 @@ const authPaths: swaggerJSDoc.Paths = {
                 },
               },
             },
-          }
+          },
         },
         "401": {
           description: "Unauthorized",
           content: {
-            "application/json": ErrorResponse
-          }
+            "application/json": ErrorResponse,
+          },
+        },
+      },
+    },
+  },
+  "/refresh-token": {
+    post: {
+      summary: "Refresh user token",
+      tags: ["Auth"],
+      security: [
+        {
+          accessToken: [],
+          refreshToken: [],
+        },
+      ],
+      responses: {
+        "200": {
+          description: "User token refreshed successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                  },
+                },
+              },
+            },
+          },
+        },
+        "403": {
+          description: "Access denied, token missing or expired",
+          content: {
+            "application/json": ErrorResponse,
+          },
+        },
+        "404": {
+          description: "User not found",
+          content: {
+            "application/json": ErrorResponse,
+          },
         },
       },
     },

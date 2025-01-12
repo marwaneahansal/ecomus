@@ -18,7 +18,7 @@ const createCategory = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Name is required" });
     }
     const category = await createNewCategory(name);
-    res.json({ status: true, data: category, message: "Category created" });
+    res.status(201).json({ status: true, data: category, message: "Category created" });
   } catch (ex) {
     console.log(`* Error: ${ex}`);
     res.status(500).json({ message: "Internal server error" });

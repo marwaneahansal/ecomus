@@ -26,7 +26,7 @@ const createOrder = async (req: Request, res: Response) : Promise<Response> => {
     if (!order) {
       return res.status(500).json({ message: "Internal Server Error" });
     }
-    return res.json({
+    return res.status(201).json({
       status: true,
       data: order,
       message: "Order created successfully",

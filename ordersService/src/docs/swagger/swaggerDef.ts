@@ -1,17 +1,17 @@
 import SwaggerJsDoc from "swagger-jsdoc";
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 
 const swaggerDefinition: SwaggerJsDoc.SwaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Auth Service',
+    title: 'Orders Service',
     version: '1.0.0',
-    description: 'Auth Service API',
+    description: 'Orders Service API',
   },
   servers: [
     {
-      url: `http://localhost:${PORT}`,
+      url: `http://localhost:${PORT}`
     },
   ],
   components: {
@@ -21,11 +21,6 @@ const swaggerDefinition: SwaggerJsDoc.SwaggerDefinition = {
         scheme: 'bearer',
         bererFormat: 'JWT',
       },
-      refreshToken: {
-        type: 'apiKey',
-        in: 'cookie',
-        name: 'refreshToken',
-      }
     },
   },
 }
