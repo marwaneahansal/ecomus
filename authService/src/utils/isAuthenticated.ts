@@ -11,6 +11,8 @@ const isAuthenticated = async (
     if (!accessToken) {
       return { isAuthenticated: false, user: undefined };
     }
+    accessToken = accessToken.split(" ")[1];
+    console.log(`==> accessToken: ${accessToken}`);
     const user = await findUserByToken(accessToken);
     if (!user) return { isAuthenticated: false, user: undefined };
     return { isAuthenticated: true, user: user };

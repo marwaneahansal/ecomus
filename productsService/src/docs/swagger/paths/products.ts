@@ -12,7 +12,7 @@ const ErrorResponse = {
 };
 
 const productsPaths: swaggerJSDoc.Paths = {
-  "/categories": {
+  "/products/categories": {
     get: {
       summary: "Get all categories",
       tags: ["Categories"],
@@ -141,7 +141,7 @@ const productsPaths: swaggerJSDoc.Paths = {
       },
     },
   },
-  "/": {
+  "/products/": {
     get: {
       summary: "Get all products",
       tags: ["Products"],

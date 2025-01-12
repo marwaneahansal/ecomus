@@ -12,7 +12,7 @@ const ErrorResponse = {
 };
 
 const ordersPaths: swaggerJSDoc.Paths = {
-  "/": {
+  "/orders/": {
     get: {
       summary: "Get all orders",
       tags: ["Orders"],

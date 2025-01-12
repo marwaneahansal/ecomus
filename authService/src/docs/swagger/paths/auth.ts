@@ -12,7 +12,7 @@ const ErrorResponse = {
 };
 
 const authPaths: swaggerJSDoc.Paths = {
-  "/": {
+  "/auth/": {
     get: {
       summary: "Hello World from auth",
       tags: ["Auth"],
@@ -35,7 +35,7 @@ const authPaths: swaggerJSDoc.Paths = {
       },
     },
   },
-  "/register": {
+  "/auth/register": {
     post: {
       summary: "Register a new user",
       tags: ["Auth"],
@@ -93,7 +93,7 @@ const authPaths: swaggerJSDoc.Paths = {
       },
     },
   },
-  "/login": {
+  "/auth/login": {
     post: {
       summary: "Login a user",
       tags: ["Auth"],
@@ -152,7 +152,7 @@ const authPaths: swaggerJSDoc.Paths = {
       },
     },
   },
-  "/me": {
+  "/auth/me": {
     get: {
       summary: "Get current user",
       tags: ["Auth"],
@@ -204,7 +204,7 @@ const authPaths: swaggerJSDoc.Paths = {
       },
     },
   },
-  "/refresh-token": {
+  "/auth/refresh-token": {
     post: {
       summary: "Refresh user token",
       tags: ["Auth"],

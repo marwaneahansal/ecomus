@@ -5,13 +5,13 @@ import { amqpConnect } from "../utils/amqp";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const data = {
-      message: "IsAuthenticated",
-      token: req.headers.authorization,
-      consumer: "products",
-    };
-    const { channel } = await amqpConnect();
-    channel.sendToQueue("auth", Buffer.from(JSON.stringify(data)));
+    // const data = {
+    //   message: "IsAuthenticated",
+    //   token: req.headers.authorization,
+    //   consumer: "products",
+    // };
+    // const { channel } = await amqpConnect();
+    // channel.sendToQueue("auth", Buffer.from(JSON.stringify(data)));
     const products = await getAllProducts();
     res.json({
       status: true,

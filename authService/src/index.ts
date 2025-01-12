@@ -60,6 +60,11 @@ const swaggerDocs = swaggerJsdoc({
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.get('/swagger.json', (_, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerDocs);
+});
+
 app.use(router);
 
 const PORT = process.env.PORT || 3001;
